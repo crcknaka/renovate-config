@@ -89,6 +89,13 @@
         "node"
       ],
       "allowedVersions": "/^\\d*[02468][.-]/"
+    },
+    {
+      "description": "поле engines в package.json не трогаем — версию Node задаёт Dockerfile",
+      "matchDepTypes": [
+        "engines"
+      ],
+      "enabled": false
     }
   ]
 }
