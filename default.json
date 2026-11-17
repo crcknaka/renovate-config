@@ -1,0 +1,94 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard"
+  ],
+  "timezone": "Europe/Riga",
+  "schedule": [
+    "* 3-7 * * 1"
+  ],
+  "minimumReleaseAge": "3 days",
+  "internalChecksFilter": "strict",
+  "prConcurrentLimit": 4,
+  "rangeStrategy": "bump",
+  "labels": [
+    "deps"
+  ],
+  "platformAutomerge": false,
+  "automergeType": "pr",
+  "automergeSchedule": [
+    "* 9-12 * * 1"
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": [
+      "* 3-7 * * 1"
+    ]
+  },
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": [
+      "security"
+    ],
+    "minimumReleaseAge": null,
+    "schedule": [
+      "at any time"
+    ],
+    "automergeSchedule": [
+      "* 9-17 * * *"
+    ]
+  },
+  "packageRules": [
+    {
+      "description": "патчи — один PR в неделю, автослияние при зелёном CI",
+      "matchUpdateTypes": [
+        "patch",
+        "pin",
+        "digest"
+      ],
+      "groupName": "патчи",
+      "groupSlug": "weekly-patch",
+      "automerge": true
+    },
+    {
+      "description": "минорные — один PR в неделю, сливаем руками",
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "groupName": "минорные",
+      "groupSlug": "weekly-minor"
+    },
+    {
+      "description": "Next и React — всегда вместе",
+      "matchPackageNames": [
+        "next",
+        "eslint-config-next",
+        "@next/**",
+        "react",
+        "react-dom",
+        "@types/react",
+        "@types/react-dom"
+      ],
+      "groupName": "next + react",
+      "groupSlug": "next-react"
+    },
+    {
+      "description": "мажоры — только по галочке в Dependency Dashboard",
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "dependencyDashboardApproval": true
+    },
+    {
+      "description": "Node в образах — только чётные LTS",
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchPackageNames": [
+        "node"
+      ],
+      "allowedVersions": "/^\\d*[02468][.-]/"
+    }
+  ]
+}
